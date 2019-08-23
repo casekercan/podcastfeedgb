@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Bayside Granite Bay | Podcast Feed</title>
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+</head>
+
+<body>
+
+  <div>
+    <h1>Bayside Granite Bay | Postcast Feed</h1>
+    <div class="podcastfeed"></div>
+
+  </div>
+
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+      console.log("ready");
+      const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
+      var podcasts = [];
+      $.ajax({
+        url: CORS_PROXY + "https://podcasts.subsplash.com/wxmqmtj/podcast.rss",
+        type: 'GET',
+        dataType: "xml",
+        success: function (xml) {
+          $(xml).find("item").each(function () {
+            var date = $(this).find("pubDate").text();
+            var speaker = $(this).find("itunes:author").text()
+            var message = $(this).find("title").text();
+            var url = $(this).find("enclosure").attr('url');
+
+            $(".podcastfeed").append("<h3>DATE: " + date + "</h3>");
+            $(".podcastfeed").append("<p> SPEAKER: " + speaker + "</p>");
+            $(".podcastfeed").append("<p> MESSAGE TITLE: " + message + "</p>");
+            $(".podcastfeed").append("<p> AUDIO URL: <a href=" + url + " target=`_blank`> Click Here to Play/Download </a></p>");
+            $(".podcastfeed").append("<hr>");
+          });
+        }
+      });
+    });
+
+  </script>
+
+</body>
+
+</html>
