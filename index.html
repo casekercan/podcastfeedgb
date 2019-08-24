@@ -28,8 +28,8 @@
         dataType: "xml",
         success: function (xml) {
           $(xml).find("item").each(function () {
-            var date = $(this).find("pubDate").text();
-            var speaker = $(this).find("itunes:author").text()
+            var date = $(this).find("pubDate").text().slice(0, -14);
+            var speaker = $(this).find("itunes\\:author").text()
             var message = $(this).find("title").text();
             var url = $(this).find("enclosure").attr('url');
 
